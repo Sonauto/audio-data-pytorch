@@ -100,7 +100,7 @@ class MetaDataset(WAVDataset):
                 list(
                     filter(
                         lambda item: item != -1,
-                        map(lambda artist: self.mappings["artists"][artist], artists),
+                        map(lambda artist: self.mappings["artists"].get(artist, -1), artists),
                     )
                 )
             )
@@ -108,7 +108,7 @@ class MetaDataset(WAVDataset):
                 list(
                     filter(
                         lambda item: item != -1,
-                        map(lambda genre: self.mappings["genres"][genre], genres),
+                        map(lambda genre: self.mappings["genres"].get(genre, -1), genres),
                     )
                 )
             )

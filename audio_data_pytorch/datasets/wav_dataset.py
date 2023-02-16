@@ -12,7 +12,7 @@ from ..utils import fast_scandir, is_silence
 
 
 def get_all_wav_filenames(paths: Sequence[str], recursive: bool) -> List[str]:
-    extensions = [".wav", ".flac"]
+    extensions = [".wav", ".flac", ".ogg", ".mp3"]
     filenames = []
     for path in paths:
         _, files = fast_scandir(path, extensions, recursive=recursive)
@@ -31,6 +31,7 @@ class WAVDataset(Dataset):
         check_silence: bool = True,
         with_ID3: bool = False,
     ):
+        torchaudio.set_audio_backend("soundfile")
         self.paths = path if isinstance(path, (list, tuple)) else [path]
         self.wavs = get_all_wav_filenames(self.paths, recursive=recursive)
         self.transforms = transforms
