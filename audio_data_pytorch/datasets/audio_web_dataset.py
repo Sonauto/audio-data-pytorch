@@ -101,7 +101,14 @@ class AudioWebDataset(wds.WebDataset):
         max_crops: Optional[int] = None,
         **kwargs,
     ):
-        super().__init__(urls=urls, resampled=True, handler=log_and_continue, **kwargs)
+        super().__init__(
+            urls=urls,
+            resampled=True,
+            handler=log_and_continue,
+            cache_dir="_cache",
+            cache_size=5e10,
+            **kwargs,
+        )
 
         # Decode audio
         if use_wav_processor:
@@ -153,6 +160,7 @@ class AudioWebDataloader(wds.WebLoader):
             shuffle=False,
             pin_memory=True,
             prefetch_factor=2,
+            persistent_workers=True,
         )
 
         # Shuffle between workers
@@ -167,7 +175,6 @@ class AudioWebDataloader(wds.WebLoader):
 
 
 if __name__ == "__main__":
-
     batch_size = 32
 
     loader = AudioWebDataloader(
