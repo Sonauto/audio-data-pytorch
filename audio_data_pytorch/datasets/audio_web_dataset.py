@@ -20,6 +20,13 @@ def default(val, d):
 def first(x):
     return x[0]
 
+# def select(sample):
+#     # Skip empty samples
+#     if sample[0][0].shape[-1] > 0:
+#         return sample
+#     else:
+#         return None
+
 
 def identity(x):
     return x
@@ -105,8 +112,8 @@ class AudioWebDataset(wds.WebDataset):
             urls=urls,
             resampled=True,
             handler=log_and_continue,
-            cache_dir="_cache",
-            cache_size=5e10,
+            cache_dir="/scratch/autoencoder_cache/",
+            cache_size=20e10,
             **kwargs,
         )
 
@@ -117,6 +124,7 @@ class AudioWebDataset(wds.WebDataset):
         else:
             self.decode(wds.torch_audio, handler=log_and_continue)
             self.to_tuple("wav;flac", "json", handler=log_and_continue)
+            # self.map(select, handler=log_and_continue)
             self.map_tuple(first, identity, handler=log_and_continue)
 
         # Transform audio
