@@ -112,8 +112,6 @@ class AudioWebDataset(wds.WebDataset):
             urls=urls,
             resampled=True,
             handler=log_and_continue,
-            cache_dir="/scratch/autoencoder_cache/",
-            cache_size=20e10,
             **kwargs,
         )
 
