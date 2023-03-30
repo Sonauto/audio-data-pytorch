@@ -166,7 +166,7 @@ class AudioWebDataloader(wds.WebLoader):
             shuffle=False,
             pin_memory=True,
             prefetch_factor=2,
-            persistent_workers=True,
+            persistent_workers=False,
         )
 
         # Shuffle between workers
