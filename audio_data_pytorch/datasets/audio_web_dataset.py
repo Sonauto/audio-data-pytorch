@@ -165,7 +165,7 @@ class AudioWebDataloader(wds.WebLoader):
             num_workers=num_workers,
             shuffle=False,
             pin_memory=True,
-            prefetch_factor=2,
+            prefetch_factor=2 if num_workers > 0 else None,
             persistent_workers=False,
         )
 
