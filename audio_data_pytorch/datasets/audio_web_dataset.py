@@ -106,11 +106,12 @@ class AudioWebDataset(wds.WebDataset):
         use_wav_processor: bool = False,
         crop_size: Optional[int] = None,
         max_crops: Optional[int] = None,
+        resampled: bool = True,
         **kwargs,
     ):
         super().__init__(
             urls=urls,
-            resampled=True,
+            resampled=resampled,
             handler=log_and_continue,
             **kwargs,
         )
