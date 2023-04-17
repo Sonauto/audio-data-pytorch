@@ -113,6 +113,9 @@ class AudioWebDataset(wds.WebDataset):
             urls=urls,
             resampled=resampled,
             handler=log_and_continue,
+            nodesplitter=wds.shardlists.split_by_node
+            if not resampled
+            else wds.shardlists.single_node_only,
             **kwargs,
         )
 
