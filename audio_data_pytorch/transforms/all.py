@@ -10,6 +10,7 @@ from .randomcrop import RandomCrop
 from .resample import Resample
 from .scale import Scale
 from .stereo import Stereo
+from .firfilter import FIRFilter
 
 
 class AllTransform(nn.Module):
@@ -23,6 +24,7 @@ class AllTransform(nn.Module):
         scale: Optional[float] = None,
         stereo: bool = False,
         mono: bool = False,
+        fir_filter: bool = False,
     ):
         super().__init__()
         self.random_crop_size = random_crop_size
@@ -40,6 +42,7 @@ class AllTransform(nn.Module):
             else nn.Identity(),
             RandomCrop(random_crop_size) if exists(random_crop_size) else nn.Identity(),
             Crop(crop_size) if exists(crop_size) else nn.Identity(),
+            FIRFilter() if fir_filter else nn.Identity(),
             Mono() if mono else nn.Identity(),
             Stereo() if stereo else nn.Identity(),
             Loudness(sampling_rate=target_rate, target=loudness)  # type: ignore
